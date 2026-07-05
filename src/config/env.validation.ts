@@ -25,6 +25,10 @@ class EnvironmentVariables {
   @IsString()
   @IsNotEmpty()
   SUPABASE_JWT_SECRET!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  CORS_ORIGIN!: string;
 }
 
 export function validate(config: Record<string, unknown>): EnvironmentVariables {
