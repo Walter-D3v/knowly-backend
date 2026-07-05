@@ -38,11 +38,14 @@ export class N8nService {
     });
   }
 
-  async sendChat(prompt: string): Promise<N8nWebhookResponse> {
+  async sendChat(
+    prompt: string,
+    sessionId: string,
+  ): Promise<N8nWebhookResponse> {
     const webhookUrl = this.configService.getOrThrow<string>('N8N_CHAT_WEBHOOK');
 
     return this.executeWebhook('POST /chat', webhookUrl, {
-      data: { prompt },
+      data: { prompt, session_id: sessionId },
       headers: { 'Content-Type': 'application/json' },
     });
   }

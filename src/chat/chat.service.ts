@@ -14,8 +14,10 @@ export class ChatService {
     user: AuthenticatedUser,
     dto: ChatRequestDto,
   ): Promise<N8nWebhookResponse> {
-    this.logger.log(`User ${user.id} sending chat prompt`);
+    this.logger.log(
+      `User ${user.id} sending chat prompt (sessionId: ${user.id})`,
+    );
 
-    return this.n8nService.sendChat(dto.prompt);
+    return this.n8nService.sendChat(dto.prompt, user.id);
   }
 }
