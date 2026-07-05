@@ -44,9 +44,53 @@ cp .env.example .env
 # Desarrollo
 npm run start:dev
 
-# Producción
+# Producción local
 npm run build
 npm run start:prod
+```
+
+## Deploy en Railway
+
+### 1. Crear el servicio
+
+1. Entra a [railway.app](https://railway.app) e inicia sesión con GitHub.
+2. **New Project → Deploy from GitHub repo**.
+3. Selecciona el repositorio `knowly-backend`.
+4. Railway detecta Node.js y usa `railway.toml` automáticamente.
+
+### 2. Variables de entorno
+
+En **Variables** del servicio, agrega (no pongas `PORT`; Railway lo inyecta solo):
+
+| Variable | Valor |
+|----------|-------|
+| `N8N_DOCUMENT_WEBHOOK` | `https://ffcastillo.app.n8n.cloud/webhook/ingestion` |
+| `N8N_CHAT_WEBHOOK` | `https://ffcastillo.app.n8n.cloud/webhook/ask` |
+| `SUPABASE_URL` | URL de tu proyecto Supabase |
+| `SUPABASE_JWT_SECRET` | JWT Secret de Supabase (Settings → API) |
+| `CORS_ORIGIN` | URL de tu frontend (ej. `https://tu-app.netlify.app`) |
+
+### 3. Dominio público
+
+1. En el servicio, abre **Settings → Networking**.
+2. Clic en **Generate Domain**.
+3. Obtendrás una URL como `https://knowly-backend-production.up.railway.app`.
+
+### 4. Verificar
+
+```bash
+curl -X POST https://TU-DOMINIO-RAILWAY.up.railway.app/chat \
+  -H "Authorization: Bearer <supabase_jwt>" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt":"Hola","sessionId":"user-123"}'
+```
+
+### 5. Conectar el frontend
+
+En tu Nuxt/Netlify, apunta la API al dominio de Railway:
+
+```
+NUXT_PUBLIC_API_URL=https://TU-DOMINIO-RAILWAY.up.railway.app
 ```
 
 ## Endpoints

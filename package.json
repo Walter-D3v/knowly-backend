@@ -4,6 +4,9 @@
   "description": "API Gateway for Knowly - knowledge centralization platform",
   "private": true,
   "license": "UNLICENSED",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "nest build",
     "start": "nest start",
