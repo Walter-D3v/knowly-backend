@@ -12,13 +12,13 @@ import { AuthenticatedRequest } from '../../common/decorators/current-user.decor
 export class AuthGuard implements CanActivate {
   constructor(private readonly authService: AuthService) {}
 
-  canActivate(context: ExecutionContext): boolean {
+  async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest<Request>();
     const authorization = request.headers.authorization;
 
     try {
       const token = this.authService.extractTokenFromHeader(authorization);
-      const user = this.authService.validateToken(token);
+      const user = await this.authService.validateToken(token);
 
       (request as AuthenticatedRequest).user = user;
 

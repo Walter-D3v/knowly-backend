@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { AxiosError } from 'axios';
-import FormData from 'form-data';
+import FormData = require('form-data');
 import { firstValueFrom } from 'rxjs';
 import { N8nWebhookResponse } from './interfaces/n8n-webhook-response.interface';
 
